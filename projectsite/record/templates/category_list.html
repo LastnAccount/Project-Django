@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+  <a href="{% url 'category-add' %}" class="custom-btn btn btn-primary">Add New Category</a><br>
+  <section class="trainers-container">
+    <table class="styled-table">
+      <tbody>
+        <tr>
+          <th>Product Type</th>
+          <th>Description</th>
+          <th>Action</th>
+        </tr>
+        {% for category in categories %}
+          <tr>
+            <td>{{ category.name }}</td>
+            <td>{{ category.description }}</td>
+            <td>
+              <a href="{% url 'category-update' category.category_id %}">Edit</a> |
+              <a href="{% url 'category-delete' category.category_id %}">Delete</a>
+            </td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="3" style="text-align: center;">
+              <p>No Records Found</p>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+  <div>
+    {% include 'includes/pagination.html' %}
+  </div> 
+{% endblock %}

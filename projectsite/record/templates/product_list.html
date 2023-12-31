@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+  <a href="{% url 'product-add' %}" class="custom-btn btn btn-primary">Add New Product</a><br>
+  <section class="cards-container">
+    <!-- Display Product Cards -->
+    {% for product in products %}
+      <div class="card-box">
+        <div class="card">
+          <div class="card-type" id="product">
+            <div class="card-image" id="product-img">
+              <!-- Check if the product has an image -->
+              {% if product.image %}
+                <img src="{{ product.image.url }}" alt="{{ product.name }} Image">
+              {% else %}
+                <p>No image available</p>
+              {% endif %}
+            </div>
+            <div class="card-name">
+              <h2 class="sbs">{{ product.name }}</h2>
+              <hr />
+            </div>
+            <table class="card-stats">
+              <tbody>
+                <tr>
+                  <th>Description:</th>
+                  <td>{{ product.description }}</td>
+                </tr>
+                <tr>
+                  <th>Price:</th>
+                  <td>${{ product.price }}</td>
+                </tr>
+                <!-- Add more product fields as needed -->
+                <tr>
+                  <th>Action:</th>
+                  <td>
+                    <a href="{% url 'product-update' product.product_id %}">Edit</a> |
+                    <a href="{% url 'product-delete' product.product_id %}">Delete</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <hr />
+        </div>
+      </div>
+    {% endfor %}
+    <div>
+      {% include 'includes/pagination.html' %}
+    </div>
+  </section>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content%}
+ <a href="{% url 'review-add' %}" class="custom-btn btn btn-primary">Add New Product</a><br>
+  <section class="trainers-container">
+    <table class="styled-table">
+      <tbody>
+        <tr>
+          <th>Review ID</th>
+          <th>Product</th>
+          <th>User Name</th>
+          <th>Comment</th>
+          <th>Action</th>
+        </tr>
+        {% for review in review %}
+          <tr>
+            <td>{{ review.review_id }}</td>
+            <td>{{ review.product.name }}</td>
+            <td>{{ review.user_name }}</td>
+            <td>{{ review.comment }}</td>
+            <td>
+              <a href="{% url 'review-update' review.review_id %}">Edit</a> |
+              <a href="{% url 'review-delete' review.review_id %}">Delete</a>
+            </td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="5" style="text-align: center;">
+              <p>No Records Found</p>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+  <div>
+    {% include 'includes/pagination.html' %}
+  </div> 
+  {% endblock %}

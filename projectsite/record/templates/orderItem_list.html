@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+  <a href="{% url 'orderitem-add' %}" class="custom-btn btn btn-primary">Add New Order Item</a><br>
+  <section class="trainers-container">
+    <table class="styled-table">
+      <tbody>
+        <tr>
+          <th>Product</th>
+          <th>Order</th>
+          <th>Quantity</th>
+          <th>Action</th>
+        </tr>
+        {% for orderitem in orderitem %}
+          <tr>
+            <td>{{ orderitem.product.name }}</td>
+            <td>{{ orderitem.order.order_id }}</td>
+            <td>{{ orderitem.quantity }}</td>
+            <td>
+              <a href="{% url 'orderitem-update' orderitem.pk %}">Edit</a> |
+              <a href="{% url 'orderitem-delete' orderitem.pk %}">Delete</a>
+            </td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="4" style="text-align: center;">
+              <p>No Records Found</p>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+  <div>
+    {% include 'includes/pagination.html' %}
+  </div> 
+{% endblock %}
